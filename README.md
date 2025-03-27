@@ -38,3 +38,9 @@ npm run dev
 + Press Space to add a tag after typing it completely.
 + Press Escape to clear the search input.
 + Click on a selected tag to remove it.
+
+## Gifs
+
+![](/docs/gif1.gif)
+![](/docs/gif2.gif)
+![](/docs/gif3.gif)
