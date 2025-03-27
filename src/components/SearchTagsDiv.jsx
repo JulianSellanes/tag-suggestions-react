@@ -29,7 +29,22 @@ export const SearchTagsDiv = ({ suggestions, onSelect }) => {
 
             setFilteredSuggestions(suggestions
                 .filter(item => item.toLowerCase().includes(value.toLowerCase()))
-                .sort((a, b) => a.indexOf(value) - b.indexOf(value))
+                .sort((a, b) => {
+                    const aLower = a.toLowerCase();
+                    const bLower = b.toLowerCase();
+                    const searchLower = value.toLowerCase();
+            
+                    // Prioritize exact match first
+                    if (aLower === searchLower) return -1;
+                    if (bLower === searchLower) return 1;
+            
+                    // Then prioritize words that start with the search term
+                    if (aLower.startsWith(searchLower) && !bLower.startsWith(searchLower)) return -1;
+                    if (bLower.startsWith(searchLower) && !aLower.startsWith(searchLower)) return 1;
+            
+                    // Otherwise, sort by index of occurrence
+                    return aLower.indexOf(searchLower) - bLower.indexOf(searchLower);
+                })
             );
         }
         else

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { SearchTagsDiv } from "./components/SearchTagsDiv";
 
 export const App = () => {
-    const suggestions = ["Apple", "AppLe", "Aa a", "A c b", "Banana", "B", "Cherry", "Grape", "Orange", "Peach", "Pear", "Donald Trump", "Joe Biden", "Lol", "Test test", "Lorem ipsum dolor sit amet consectetur", "Lorem ipsum dolor sit amet consectetu dawd dwadwad dwada ece ewwedwedwd edfwewed ewdwedwed wdr"];
+    const suggestions = ["Apple", "Aa a", "A c b", "Banana", "B", "Cherry", "Grape", "Orange", "Peach", "Pear", "Donald Trump", "Joe Biden", "Lol", "Test test", "Lorem ipsum dolor sit amet consectetur", "Lorem ipsum dolor sit amet consectetu dawd dwadwad dwada ece ewwedwedwd edfwewed ewdwedwed wdr"];
     const [tags, setTags] = useState([]);
 
     const handleSelect = suggestion => {
