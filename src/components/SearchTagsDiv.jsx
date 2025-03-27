@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 export const SearchTagsDiv = ({ suggestions, onSelect }) => {
     const [input, setInput] = useState("");
     const [filteredSuggestions, setFilteredSuggestions] = useState([]);
     const [highlightIndex, setHighlightIndex] = useState(-1);
-    
+    const listRef = useRef([]);
+
     const handleChange = e => {
         const value = e.target.value;
         setInput(value);
@@ -47,12 +48,26 @@ export const SearchTagsDiv = ({ suggestions, onSelect }) => {
     const handleKeyDown = e => {
         if(e.key === "ArrowDown")
         {
-            setHighlightIndex(prevIndex => prevIndex < filteredSuggestions.length - 1 ? prevIndex + 1 : 0);
+            if(filteredSuggestions.length > 0)
+            {
+                setHighlightIndex(prevIndex => {
+                    const newIndex = prevIndex < filteredSuggestions.length - 1 ? prevIndex + 1 : 0;
+                    listRef.current[newIndex]?.scrollIntoView({ block: "nearest", behavior: "smooth" });
+                    return newIndex;
+                });
+            }
             e.preventDefault();
         }
         else if(e.key === "ArrowUp")
         {
-            setHighlightIndex(prevIndex => prevIndex > 0 ? prevIndex - 1 : filteredSuggestions.length - 1);
+            if(filteredSuggestions.length > 0)
+            {
+                setHighlightIndex(prevIndex => {
+                    const newIndex = prevIndex > 0 ? prevIndex - 1 : filteredSuggestions.length - 1;
+                    listRef.current[newIndex]?.scrollIntoView({ block: "nearest", behavior: "smooth" });
+                    return newIndex;
+                });
+            }
             e.preventDefault();
         }
         else if(e.key === "Enter")
@@ -89,7 +104,7 @@ export const SearchTagsDiv = ({ suggestions, onSelect }) => {
             <ul onMouseLeave={() => setHighlightIndex(-1)} className={input.length > 0 ? "visible" : ""}>
             {
                 filteredSuggestions.length > 0 ? (
-                    filteredSuggestions.map((suggestion, index) => ( <li key={index} onClick={() => handleSelect(suggestion)} onMouseMove={() => setHighlightIndex(index)} className={highlightIndex === index ? "highlighted" : ""}> {suggestion} </li> ))
+                    filteredSuggestions.map((suggestion, index) => ( <li key={index} ref={el => listRef.current[index] = el} onClick={() => handleSelect(suggestion)} onMouseMove={() => setHighlightIndex(index)} className={highlightIndex === index ? "highlighted" : ""}> {suggestion} </li> ))
                 ) : (
                     <li className="no-results">❌ No results found</li>
                 )
