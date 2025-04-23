@@ -11,7 +11,7 @@ To set up the project locally, follow these steps:
 Clone the repository:
 ```
 git clone https://github.com/JulianSellanes/tag-suggestions-react/
-cd .\tag-suggestions-react\
+cd ./tag-suggestions-react/
 ```
 Install dependencies:
 ```
